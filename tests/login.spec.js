@@ -12,9 +12,9 @@ test.describe('Gymstore.vn - Đăng nhập tài khoản', () => {
 
   test('TC-LOGIN-01: Đăng nhập với email và mật khẩu hợp lệ', async ({ page }) => {
     // Truy cập trang đăng nhập
-    await page.goto('/dang-nhap');
+    await page.goto('/account/login');
     await page.waitForLoadState('domcontentloaded');
-    await expect(page).toHaveURL(/dang-nhap/);
+    await expect(page).toHaveURL(/account\/login/);
 
     // Điền email
     const emailField = page.locator('input[name="email"], input[name="username"], input[type="email"], input[type="text"][name*="email"]');
@@ -28,12 +28,12 @@ test.describe('Gymstore.vn - Đăng nhập tài khoản', () => {
     const loginButton = page.locator('button[type="submit"], input[type="submit"], button:has-text("Đăng nhập")');
     await loginButton.first().click();
 
-    // Đợi trang xử lý đăng nhập
-    await page.waitForTimeout(5000);
+    // Đợi trang xử lý đăng nhập và chuyển hướng khỏi trang đăng nhập
+    await page.waitForURL((url) => !url.pathname.includes('/account/login'), { timeout: 10000 });
 
-    // Kiểm tra đăng nhập thành công - chuyển khỏi trang đăng nhập
+    // Kiểm tra đăng nhập thành công
     const currentUrl = page.url();
-    const isLoggedIn = !currentUrl.includes('dang-nhap') || currentUrl.includes('account');
+    const isLoggedIn = !currentUrl.includes('/account/login');
     expect(isLoggedIn).toBeTruthy();
   });
 });

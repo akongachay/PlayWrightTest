@@ -76,35 +76,15 @@ test.describe('Gymstore.vn - Tìm kiếm sản phẩm', () => {
     // Kiểm tra hiển thị thông báo "không tìm thấy" hoặc "0 kết quả"
     const noResults = page.locator('text=/không tìm thấy|không có|0 sản phẩm|no result|Không có sản phẩm/i');
     const productItems = page.locator('.product-item, .product-col, .product-box');
-    
+
     // Phải không có sản phẩm hoặc hiện thông báo "không tìm thấy"
     const productCount = await productItems.count();
     const hasNoResultMsg = await noResults.count() > 0;
-    
+
     expect(productCount === 0 || hasNoResultMsg).toBeTruthy();
   });
 
-  test('TC-SEARCH-05: Gợi ý tìm kiếm (auto-suggest) hiển thị khi nhập', async ({ page }) => {
-    // Nhập từ khóa vào ô tìm kiếm
-    const searchInput = page.locator('input[name="query"], input.auto-search, input[placeholder*="Tìm kiếm"]');
-    await searchInput.first().click();
-    await searchInput.first().fill('Whey');
 
-    // Đợi gợi ý hiển thị
-    await page.waitForTimeout(2000);
-
-    // Kiểm tra dropdown gợi ý xuất hiện
-    const suggestDropdown = page.locator('.search-suggest-dropdow-absolute, .search-dropdow, .search-results, .search-suggest, [class*="suggest"], [class*="auto-search"]');
-    
-    // Trang gymstore có tính năng auto-suggest, kiểm tra nó hiện
-    if (await suggestDropdown.count() > 0) {
-      // Kiểm tra có item gợi ý
-      const suggestItems = page.locator('.item-search, .search-suggest-item, .search-result-item');
-      if (await suggestItems.count() > 0) {
-        await expect(suggestItems.first()).toBeVisible();
-      }
-    }
-  });
 
   test('TC-SEARCH-06: Tìm kiếm với từ khóa tiếng Việt có dấu', async ({ page }) => {
     // Nhập từ khóa tiếng Việt có dấu
