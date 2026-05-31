@@ -1,0 +1,233 @@
+{
+  "cookies": [
+    {
+      "name": "_landing_page",
+      "value": "%2Faccount%2Flogin",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_orig_referrer",
+      "value": "",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "cart",
+      "value": "c74595cb26692b494e40bb36981c1cf3",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "cart_sig",
+      "value": "cebcf9441f36482f4d9ed0df4aeb01bd",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_landing_full_page",
+      "value": "https://gymstore.vn/account/login",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_landing_type",
+      "value": "customers/login",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513452,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_sapo_essential",
+      "value": "CfDJ8KUaGrrgqhFGrvPmHhs8VGB7WdXr5j19deykhdKvMxqTYWtmaggKb1nyZwcTNldhdUWTalcz2brtHoiLaEGt4FHHZNmrzhE8-NPt7cHMP1XzaQxJCnyJ7COnO1xkVgpiqP2NjQ-7hpQLOwJ2rGdpEdgxca0QAjDJy0W21LYWa5fmGLD4YMbOS9mDcWzX47HawdaxPrRQSdLEbx-d7cWTpgWFkF6CW-MMg3cbsGTlNNYIFuKhsQkbWo2M6wZX4JWAvo4Y4-MY9jmOSH6Dn3kflbDYuCFcbNVaRTosM6kgGwtC",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1811753461.591,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "customer_sig",
+      "value": "04df6a4e0883f9624df8c251f8363b84",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781513462,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ga_VREDWG3W6W",
+      "value": "GS2.1.s1780217452$o1$g1$t1780217463$j49$l0$h2065671227",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1843289463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.1321628419.1780217463",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1787993463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_gat_UA-90408097-1",
+      "value": "1",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1780217523,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_fbp",
+      "value": "fb.1.1780217452591.975649208171457662",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1787993463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_s",
+      "value": "9cbd46c6-dd7d-47f9-a2cd-d213b75e7d5a",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1780219263,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_v",
+      "value": "09b8652b-7dc6-4abd-8bcf-b41371cfb1ad",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1874825463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_origin_reference_site",
+      "value": "",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1782809463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_v_new",
+      "value": "true",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1780219263,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_clck",
+      "value": "ghjecv%5E2%5Eg6i%5E0%5E2342",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1811753463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "cart_currency",
+      "value": "VND",
+      "domain": "gymstore.vn",
+      "path": "/",
+      "expires": 1781427064,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.2.888858457.1780217452",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1843289464,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.2.1168621243.1780217464",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1780303864,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    },
+    {
+      "name": "_gat",
+      "value": "1",
+      "domain": ".gymstore.vn",
+      "path": "/",
+      "expires": 1780217524,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://gymstore.vn",
+      "localStorage": [
+        {
+          "name": "lastExternalReferrer",
+          "value": "empty"
+        },
+        {
+          "name": "lastExternalReferrerTime",
+          "value": "1780217452576"
+        },
+        {
+          "name": "_gcl_ls",
+          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"eopCount\":0,\"creationTimeMs\":1780217463266},\"expires\":1787993463266}}"
+        }
+      ]
+    }
+  ]
+}
