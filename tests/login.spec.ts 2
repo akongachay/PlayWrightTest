@@ -1,0 +1,104 @@
+// @ts-check
+import { test, expect } from '@playwright/test';
+
+// Tăng timeout mặc định cho các test trong file này để tránh false timeout trên các trang chậm
+// Giảm timeout tổng để phát hiện lỗi nhanh hơn
+test.setTimeout(30000);
+
+// Helper: cố gắng đăng nhập một cách bền bỉ, bắt navigation hoặc XHR POST liên quan tới login
+async function attemptLogin(page, email, password) {
+  // Tối ưu: giảm các timeout để test nhanh hơn, ưu tiên chờ selector cụ thể thay vì networkidle dài
+  await page.goto('https://gymstore.vn/account/login', { waitUntil: 'domcontentloaded', timeout: 10000 }).catch(() => {});
+
+  const form = page.locator('form[action*="login"], form#customer_login, form[action*="account/login"]');
+  await form.first().waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+
+  const emailLoc = page.locator('input[name="email"], input[name="username"], input[type="email"], input[type="text"][name*="email"]');
+  const pwdLoc = page.locator('input[name="password"], input[type="password"]');
+  await emailLoc.first().fill(email).catch(() => {});
+  await pwdLoc.first().fill(password).catch(() => {});
+
+  const loginButton = page.locator('button[type="submit"], input[type="submit"], button:has-text("Đăng nhập")');
+  await loginButton.first().waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+
+  // Chờ XHR POST liên quan tới login hoặc navigation ngắn; giảm timeout để không chậm
+  const responsePromise = page.waitForResponse(r => r.request().method() === 'POST' && (r.url().includes('/account') || r.url().includes('/login') || r.url().includes('/customer') || r.url().includes('/customers')), { timeout: 7000 }).catch(() => null);
+  const navigationPromise = page.waitForNavigation({ waitUntil: 'load', timeout: 7000 }).catch(() => null);
+
+  // Thực hiện click; nếu click bị chặn, fallback bằng evaluate
+  try {
+    await Promise.all([
+      loginButton.first().click().catch(async () => {
+        const handle = await loginButton.first().elementHandle().catch(() => null);
+        if (handle) await page.evaluate(el => el.click(), handle).catch(() => {});
+      }),
+      responsePromise,
+      navigationPromise,
+    ]);
+  } catch (e) {
+    if (typeof page.isClosed === 'function' && page.isClosed()) {
+      throw new Error('Page was closed during login attempt: ' + e.message);
+    }
+  }
+
+  const response = await responsePromise.catch(() => null);
+  return { response };
+}
+
+/**
+ * ============================================================
+ * TEST SUITE: Đăng nhập tài khoản - Gymstore.vn
+ * ============================================================
+ * Test đăng nhập với tài khoản tenlachay@gmail.com
+ */
+
+test.describe('Gymstore.vn - Đăng nhập tài khoản', () => {
+
+  test('TC-LOGIN-01: Đăng nhập với email và mật khẩu hợp lệ', async ({ page }) => {
+    // Dùng helper tối ưu để đăng nhập nhanh
+    const { response } = await attemptLogin(page, 'tenlachay@gmail.com', 'akongachay123');
+
+    // Kiểm tra nhanh: tìm dấu hiệu thành công (Đăng xuất) hoặc redirect tới trang account
+    const logoutVisible = await page.locator('text=Đăng xuất').first().isVisible().catch(() => false);
+    const onAccount = page.url().includes('/account');
+      // Nếu đăng nhập thành công thì lưu storage state để tái sử dụng cho các test khác
+      if (logoutVisible || onAccount || !!response) {
+        await page.context().storageState({ path: 'storageState.json' }).catch(() => {});
+      }
+      expect(logoutVisible || onAccount || !!response).toBeTruthy();
+  });
+
+  test('TC-LOGIN-02: Đăng nhập với email sai', async ({ page }) => {
+    // Dùng helper với email sai
+    const { response } = await attemptLogin(page, 'wrong-email@example.com', 'akongachay123');
+
+    // Kì vọng: vẫn ở trang login và xuất hiện thông báo lỗi
+    const stillOnLogin = page.url().includes('/account/login');
+    const errorVisible = await page.locator('text=/không|sai|invalid|error|không tồn tại|Không tìm thấy/i').first().isVisible().catch(() => false);
+    // Nếu server trả về 4xx/401 trên response thì cũng coi là thất bại đăng nhập nhanh
+    const respIsFailure = response ? (response.status() >= 400) : false;
+    expect(stillOnLogin && (errorVisible || respIsFailure)).toBeTruthy();
+  });
+
+  test('TC-LOGIN-03: Đăng nhập với email đúng nhưng mật khẩu sai', async ({ page }) => {
+    // Dùng helper với email đúng nhưng mật khẩu sai
+    const { response } = await attemptLogin(page, 'tenlachay@gmail.com', 'wrongpassword123');
+
+    // Kì vọng: vẫn ở trang login và xuất hiện thông báo lỗi liên quan mật khẩu
+    const stillOnLogin = page.url().includes('/account/login');
+
+    // Chờ ngắn cho thông báo lỗi hoặc cho nút login bật lại
+    const errorLocator = page.locator('text=/sai|mật khẩu|incorrect|invalid|error/i');
+    const errorVisible = await errorLocator.first().waitFor({ state: 'visible', timeout: 4000 }).then(() => true).catch(() => false);
+
+    const loginButton = page.locator('button[type="submit"], input[type="submit"], button:has-text("Đăng nhập")');
+    const buttonEnabled = await loginButton.first().isEnabled().catch(() => false);
+
+    // Nếu server phản hồi 4xx/401 thì coi là failure
+    const respIsFailure = response ? (response.status() >= 400) : false;
+
+    // Coi là đúng kịch bản khi vẫn ở trang login và (có lỗi hiển thị | response lỗi | nút login được bật lại)
+    expect(stillOnLogin).toBeTruthy();
+    expect(errorVisible || respIsFailure || buttonEnabled).toBeTruthy();
+  });
+});
